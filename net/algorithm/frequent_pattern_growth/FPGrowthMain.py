@@ -23,6 +23,10 @@ def loadData():
 
 if __name__ == '__main__':
     dataset = loadData()#raw data set
-    frequentItemsSet = set([])#result set
+    frequentItemsSet = []#result list
     minsup = 2#minimum support
+    #create FP-Tree & FP-HeaderTab
     myFpGrowthImpl = MyFpGrowth(dataset, frequentItemsSet, minsup)
+    for items in frequentItemsSet:
+        print(items)
+    #mining step

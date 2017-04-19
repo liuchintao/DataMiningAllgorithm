@@ -16,7 +16,10 @@ class TreeNode:
         self.count += numOccur
     
     def disp(self, ind=1):
-        print("Parent:", self.parent, '___', self.name, " ", self.count)
+        if not isinstance(self.parent, TreeNode):
+            print("Parent:", self.parent, '___', self.name, " ", self.count)
+        else:
+            print("Parent:", self.parent.name, '___', self.name, " ", self.count)
         for child in self.children.values():
             child.disp(ind+1)
     
@@ -24,3 +27,10 @@ class TreeNode:
         for child in self.children:
             if child.name == name:
                 return child
+    
+    def add(self, child):
+        if not isinstance(child, TreeNode):
+            raise TypeError("Can only add other FPNodes as children")
+        if not child in self.children:
+            self.children[child.name] = child
+            child.parent = self
