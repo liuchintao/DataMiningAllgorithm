@@ -59,11 +59,12 @@ def createTree(initSet, minsup = 1):
     rtnTree = TreeNode('null_item', 1, None)
     #go through data set twice
     for trans, count in initSet.items():
+        print('trans: ', trans, 'count:', count)
         localD = {}
         for item in trans:
             if item in freqItemSet:
                 localD[item] = headerTab[item][0]
-#         print('localD',localD)
+        print('localD',localD)
         if len(localD) > 0:
             orderItems = [v[0] for v in sorted(localD.items(), key=lambda p:p[1],reverse=True)]
 #             print('orderItems', orderItems)

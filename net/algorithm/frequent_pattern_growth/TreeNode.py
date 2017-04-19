@@ -12,10 +12,15 @@ class TreeNode:
         self.nodeLink = None
         self.children = {}
     
-    def inc(self,numOccur):
+    def inc(self,numOccur = 1):
         self.count += numOccur
     
-#     def disp(self, ind=1):
-#         print(" "*ind, self.name, " ", self.count)
-#         for cheld in self.cheldren.values():
-#             cheld.disp(ind+1)
+    def disp(self, ind=1):
+        print("Parent:", self.parent, '___', self.name, " ", self.count)
+        for child in self.children.values():
+            child.disp(ind+1)
+    
+    def getChildByName(self, name):
+        for child in self.children:
+            if child.name == name:
+                return child
