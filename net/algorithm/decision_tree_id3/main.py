@@ -4,10 +4,12 @@ Created on 2017年4月24日
 @author: Magister
 '''
 import sys
-from net.algorithm.decision_tree_id3 import DecisionTree
+from net.algorithm.decision_tree_id3 import DecisionTree, TestClassifier
+
 
 
 def loadData():
+    print("Please enter full file name:")
     fileName = sys.stdin.readline().strip()
     print("reading file......")
     try:
@@ -25,6 +27,18 @@ def loadData():
         sys.exit(0)
 
 
+def printTree(tree, indent):
+    loc = indent
+    if isinstance(tree, dict):
+        for treeNode in tree.items():
+            print("    " * loc, treeNode[0])
+            if isinstance(treeNode[1], dict):
+                indent += 1
+                printTree(treeNode[1], indent)
+            else:
+                print("    " * (loc+1), treeNode[1])
+
+
 def main():
     #load train data set
     trainDataSet = loadData()
@@ -37,6 +51,9 @@ def main():
     
     #create decision tree
     tree = DecisionTree.makeTree(trainDataSet, attributes_list, target, 0)
+#     print(tree)
+#     printTree(tree, 0)
+    TestClassifier.testProcess(tree, attributes_list)
     pass
 
 

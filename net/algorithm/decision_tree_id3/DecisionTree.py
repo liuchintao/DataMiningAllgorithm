@@ -25,7 +25,7 @@ def entropy(attributes, data, target):
     idx = attributes.index(target)
     for rec in data:
         valFre[rec[idx]] = valFre.get(rec[idx], 0) + 1
-    for val in valFre.values()():
+    for val in valFre.values():
         if val == 0:
             entropy += 0
         else:
@@ -38,6 +38,8 @@ def gain(data, attributes, attr, target, infoD):
     Calculate the information gain(reduction in entropy) that would be 
     resulted by splitting the data set on the chosen attribute(attr)
     '''
+    if target == attr:
+        return 0
     attrValFre = {}
     subsetEntropy = 0.0
 #     count the frequency of the values of attr
@@ -51,7 +53,6 @@ def gain(data, attributes, attr, target, infoD):
         subDataSet = [entry for entry in data if entry[idx] == key]
         subsetEntropy += attrValProp * entropy(attributes, subDataSet, target)
     return (infoD - subsetEntropy)
-    pass
 
 
 def chooseAttrByID3(data, attributes, target):
@@ -61,6 +62,8 @@ def chooseAttrByID3(data, attributes, target):
 #     find best attribute as splitting criterion by calculating 
 #     information gain of each attributes.
     for attr in attributes:
+        if attr == target:
+            continue
         attrGain = gain(data, attributes, attr, target, infoD)
         if attrGain > maxgain:
             maxgain = attrGain
@@ -119,7 +122,7 @@ def makeTree(data, attributes, target, recursion):
     else:
 #         find out the next best splitting_criterion by using 
 #         attribute_selece_method
-        bestAttr = chooseAttrByID3(data, attributes, valFre, target)
+        bestAttr = chooseAttrByID3(data, attributes, target)
 #         Create a new decision tree/node with the best attribute 
 #         and an empty dictionary object--we'll fill that up next.
         tree = {bestAttr:{}}
