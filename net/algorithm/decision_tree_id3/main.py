@@ -4,6 +4,7 @@ Created on 2017年4月24日
 @author: Magister
 '''
 import sys
+from net.algorithm.decision_tree_id3 import DecisionTree
 
 
 def loadData():
@@ -34,6 +35,8 @@ def main():
     trainDataSet.remove(attributes_list)
     target = 'class'
     
+    #create decision tree
+    tree = DecisionTree.makeTree(trainDataSet, attributes_list, target, 0)
     pass
 
 
