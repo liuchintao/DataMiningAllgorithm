@@ -3,7 +3,6 @@ Created on 2017年5月3日
 
 @author: Magister
 '''
-from itertools import chain
 
 
 class Apriori(object):
