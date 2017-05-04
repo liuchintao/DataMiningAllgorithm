@@ -115,7 +115,7 @@ class MyFpGrowth(object):
     
     def __mine(self, frequentItemsSet, headerTab, inTree, prefix = set([])):
         suffixList = [v[0] for v in sorted(headerTab.items(), key = lambda p : p[1][0])]
-#         print(suffixList)
+        print('suffixList', suffixList)
         for basePat in suffixList:
             newFreqSet = prefix.copy()
             newFreqSet.add(basePat)
