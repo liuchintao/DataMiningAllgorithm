@@ -37,8 +37,12 @@ class Apriori(object):
 
     def myMerge(self, set1, set2):
         '''This method help us to merge two sets whose length are equal'''
-        
-        pass
+        mergeSet = set([])
+        for i in set1:
+            mergeSet.add(i)
+        for i in set2:
+            mergeSet.add(i)
+        return frozenset(mergeSet)
     
     
     def connect(self, count, lastItemSet, tempSet):
@@ -68,19 +72,21 @@ class Apriori(object):
                 subSet.append(item)
         else:
             for item in items:
-                temp = items.copy()
+                temp = set(items.copy())
                 temp.remove(item)
                 subSet.append(temp)
         
     
     def pruning(self, lastItemSet, tempSet):
-        for items in tempSet:
+        localSet = tempSet.copy()
+        for items in localSet:
             subSet = []
             #find temp_set's i-1 items subset.
             self.findSubset(items, subSet)
             for mSet in subSet:
                 if mSet not in lastItemSet:
                     tempSet.remove(items)
+                    break
     
     
     def findSubTransSet(self, count, trans):
@@ -100,6 +106,8 @@ class Apriori(object):
         return subSet
     
     def findSubSet(self, waitingSet):
+        if waitingSet is None:
+            return None
         rtnVal = set([])
         for items in waitingSet:
             if isinstance(items, list):
@@ -123,10 +131,10 @@ class Apriori(object):
 #         for item in rtnSet.items():
 #             print(item)
         keyList = list(rtnSet.keys())
-        i = 1
+#         i = 1
         for key in keyList:
-            print(i)
-            i += 1
+#             print(i)
+#             i += 1
             if rtnSet[key] < minSup:
                 del(rtnSet[key])
         return rtnSet
@@ -158,7 +166,7 @@ class Apriori(object):
     
     def findFreqItemSet(self, count, rawData, minSup, lastFreqSet, freqItemSet):
         count += 1
-        if lastFreqSet is None:
+        if lastFreqSet == {}:
             return None
         freqItemSet.update(lastFreqSet)
         ''' The first step to find ith frequent item set
